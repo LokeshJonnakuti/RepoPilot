@@ -56,8 +56,7 @@ def clone_repo(repo, commit, root_dir, token, logger):
         cmd = f"cd {repo_dir} && git reset --hard {commit} && git clean -fdxq"
         subprocess.run(
                 cmd,
-                shell=True,
-                check=True,
+                shell=False, check=True,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
         )
