@@ -20,7 +20,8 @@ setup(
                           "codetext",
                           "fire",
                           "chromadb",
-                          "tiktoken"], # add any additional packages that 
+                          "tiktoken",
+                          "security==1.2.1",], # add any additional packages that 
         # needs to be installed along with your package. Eg: 'caer'
         entry_points={"console_scripts": ['repopilot = repopilot.cli.cli:app',],},
 )
