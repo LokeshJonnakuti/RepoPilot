@@ -6,6 +6,7 @@ from contextlib import contextmanager
 import time
 import os
 import signal
+from security import safe_command
 
 class ZoektServer:
     """
@@ -48,8 +49,7 @@ class ZoektServer:
         if not Path(zoekt_index_repo_path).is_dir():
             Path(zoekt_index_repo_path).mkdir(parents=True)
             
-        subprocess.run(
-            f"$GOPATH/bin/zoekt-index -index {zoekt_index_repo_path} -parallelism=1 {repo_path}",
+        safe_command.run(subprocess.run, f"$GOPATH/bin/zoekt-index -index {zoekt_index_repo_path} -parallelism=1 {repo_path}",
             shell=True,
             check=True,
             stdout=subprocess.DEVNULL,
@@ -65,8 +65,7 @@ class ZoektServer:
             ZoektServer: The current instance of the ZoektServer class.
 
         """
-        self.zoekt_server = subprocess.Popen(
-            f"$GOPATH/bin/zoekt-webserver -listen :6070 -index {self.index_path}",
+        self.zoekt_server = safe_command.run(subprocess.Popen, f"$GOPATH/bin/zoekt-webserver -listen :6070 -index {self.index_path}",
             shell=True,
         )
         while True:

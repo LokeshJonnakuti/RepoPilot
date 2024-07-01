@@ -7,6 +7,7 @@ import socketserver
 from repopilot.multilspy.lsp_protocol_handler.lsp_types import SymbolKind
 import json
 import difflib
+from security import safe_command
 
 def find_most_matched_string(word_list, target):
     # Get close matches; n=1 ensures only the top match is returned
@@ -54,8 +55,7 @@ def clone_repo(repo, commit, root_dir, token, logger):
         logger.info(f"Cloning {repo} {os.getpid()}")
         Repo.clone_from(repo_url, repo_dir)
         cmd = f"cd {repo_dir} && git reset --hard {commit} && git clean -fdxq"
-        subprocess.run(
-                cmd,
+        safe_command.run(subprocess.run, cmd,
                 shell=True,
                 check=True,
                 stdout=subprocess.DEVNULL,
