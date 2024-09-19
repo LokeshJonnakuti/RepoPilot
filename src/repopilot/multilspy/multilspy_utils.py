@@ -6,7 +6,6 @@ import gzip
 import logging
 import os
 from typing import Tuple
-import requests
 import shutil
 import uuid
 
@@ -17,6 +16,7 @@ from enum import Enum
 from repopilot.multilspy.multilspy_exceptions import MultilspyException
 from pathlib import PurePath, Path
 from repopilot.multilspy.multilspy_logger import MultilspyLogger
+from security import safe_requests
 
 class TextUtils:
     """
@@ -114,7 +114,7 @@ class FileUtils:
         Downloads the file from the given URL to the given {target_path}
         """
         try:
-            response = requests.get(url, stream=True, timeout=60)
+            response = safe_requests.get(url, stream=True, timeout=60)
             if response.status_code != 200:
                 logger.log(f"Error downloading file '{url}': {response.status_code} {response.text}", logging.ERROR)
                 raise MultilspyException("Error downoading file.")

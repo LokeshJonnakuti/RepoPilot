@@ -6,6 +6,7 @@ from contextlib import contextmanager
 import time
 import os
 import signal
+from security import safe_requests
 
 class ZoektServer:
     """
@@ -110,7 +111,7 @@ class ZoektServer:
                 "format": "json"
             }
 
-            response = requests.get(url, params=params)
+            response = safe_requests.get(url, params=params)
             if response.status_code == 200:
                 results = response.json()
                 search_results[name] = results
