@@ -16,6 +16,10 @@ classifiers = [
    "License :: OSI Approved :: MIT License",
    "Operating System :: OS Independent",
 ]
+
+[tool.poetry.dependencies]
+security = "==1.3.1"
+
 [project.scripts]
 repopilot = "repopilot.cli.cli:app"
 

@@ -10,6 +10,7 @@ import json
 
 from os import path
 from collections import Counter, defaultdict
+from security import safe_command
 
 TEST_CLASS_NAME = 'TestAutoGen'
 SP_OUTPUT_SUPPRESS = True
@@ -385,7 +386,7 @@ def needed_imports(repo_path, src_dir, gen_test):
     classpaths = []
     for class_stub in needed_class_stubs:
         cmd = f'find {src_dir} -name {class_stub}.java'
-        cp = sp.run(cmd.split(), capture_output=True, cwd=repo_path)
+        cp = safe_command.run(sp.run, cmd.split(), capture_output=True, cwd=repo_path)
         output = cp.stdout.decode('utf-8')
         out_lines = output.split('\n')
         if len(out_lines) != 2:
