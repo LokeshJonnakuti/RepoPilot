@@ -71,7 +71,7 @@ class ZoektServer:
         )
         while True:
             try:
-                response = requests.get("http://localhost:6070/health")  # replace with the correct endpoint if necessary
+                response = requests.get("http://localhost:6070/health", timeout=60)  # replace with the correct endpoint if necessary
                 if response.status_code == 200:
                     break
             except requests.exceptions.ConnectionError:
@@ -110,7 +110,7 @@ class ZoektServer:
                 "format": "json"
             }
 
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, timeout=60)
             if response.status_code == 200:
                 results = response.json()
                 search_results[name] = results
